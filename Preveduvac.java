@@ -11,6 +11,24 @@
 
 Забелешка. Работете со хеш табела со отворени кофички. Сами треба да го одредите бројот на кофички и хеш функцијата.
 
+Sample input
+5
+machka cat
+kuche dog
+prase pig
+papagal parrot
+riba fish
+cat
+parrot
+fish
+KRAJ
+
+
+Sample output
+machka
+papagal
+riba
+
 Име на класа: Preveduvac
 
 */
