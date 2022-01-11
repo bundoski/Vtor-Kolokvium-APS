@@ -223,7 +223,7 @@ public class PM10 {
             merenje = pom[1];
             koficka = tabela.search(opshtina);
             if(koficka ==-1) tabela.insert(opshtina,merenje);
-            else{
+            else{    // ova proverka se praj za da ne se prepokrija duplikat kluch so vrednost bez istata da bidi zapisana vo kofickata
 
                 merenje = merenje + " " + tabela.buckets[koficka].value;
                 tabela.insert(opshtina,merenje);
