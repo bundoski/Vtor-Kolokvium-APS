@@ -138,12 +138,12 @@ public class KumanovskiDijalekt {
 
         CBHT<String, String> map = new CBHT<String, String>(77);
 
-        String rechnik[]=new String[N];
+        String rechnik;
 
         for(int i=0;i<N;i++){
-            rechnik[i]=br.readLine();
-            String [] parts = rechnik[i].split(" ");
-            map.insert(parts[1], parts[0]);
+            rechnik=br.readLine();
+            String [] parts = rechnik.split(" ");
+            map.insert(parts[0], parts[1]);
         }
 
         String tekst=br.readLine();
