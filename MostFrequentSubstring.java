@@ -120,7 +120,7 @@ public class MostFrequentSubstring {
         CBHT<String,Integer> tabela = new CBHT<String,Integer>(300);
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        String word = br.readLine().trim();
+        String word = br.readLine();
 
         /*
          *
