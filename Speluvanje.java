@@ -15,8 +15,6 @@
 
 */
 
-package Speluvanje;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -141,56 +139,25 @@ class OBHT<K extends Comparable<K>,E> {
 }
 
 
-class Zbor implements Comparable<Zbor>{
-
-    String zbor;
-
-    public Zbor(String zbor) {
-        this.zbor = zbor;
-    }
-    @Override
-    public boolean equals(Object obj) {
-        Zbor pom = (Zbor) obj;
-        return this.zbor.equals(pom.zbor);
-    }
-    @Override
-    public int hashCode() {
-        /*
-         *
-         * Vie ja kreirate hesh funkcijata
-         *
-         */
-        return zbor.hashCode();
-    }
-    @Override
-    public String toString() {
-        return zbor;
-    }
-    @Override
-    public int compareTo(Zbor arg0) {
-        return zbor.compareTo(arg0.zbor);
-    }
-}
-
 public class Speluvanje {
     public static void main(String[] args) throws IOException {
-        OBHT<Zbor, String> tabela;
+        OBHT<String, String> tabela;
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int N = Integer.parseInt(br.readLine());
         //---Vie odluchete za goleminata na hesh tabelata----
-        tabela = new OBHT<Zbor,String>(N*N);
+        tabela = new OBHT<String,String>(N*N);
 
         /*
          *
          * Vashiot kod tuka....
          *
          */
-        Zbor zbor;
+        String zbor;
         String temp;
         for(int i=0;i<N;i++){
 
             temp = br.readLine();
-            zbor = new Zbor(temp);
+            zbor = new String(temp);
             tabela.insert(zbor,temp);
         }
 
@@ -210,7 +177,7 @@ public class Speluvanje {
                 continue;
             }
 
-            Zbor searchWord = new Zbor(word);
+            String searchWord = new String(word);
             if(tabela.search(searchWord) == -1){
                 System.out.println(word);
                 flag = false;
