@@ -27,6 +27,8 @@ Nema takov lek. Доколку нарачката на клиентот е по�
 
 package Lekovi;
 
+package OBHT.Lekovi;
+
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -88,9 +90,9 @@ class OBHT<K extends Comparable<K>, E> {
         return Math.abs(key.hashCode()) % buckets.length;
     }
 
-    public MapEntry getBucket(int key) {
-        System.out.println("THIS IS THE VALUE!!!!" + buckets[key]);
-        return buckets[key];
+    public E getValue(int key) {
+
+        return buckets[key].value;
     }
 
 
@@ -198,32 +200,32 @@ class OBHT<K extends Comparable<K>, E> {
 
 class Lek {
 
-    String ime;
-    int negativna;
+    String name;
+   int daliePozitiven;
     int cena;
-    int brojLekovi;
+    int brojParcina;
 
-    public Lek(String ime, int negativna, int cena, int brojLekovi) {
-        this.ime = ime;
-        this.negativna = negativna;
+    public Lek(String name, int daliePozitiven, int cena, int brojParcina){
+        this.name = name;
+        this.daliePozitiven = daliePozitiven;
         this.cena = cena;
-        this.brojLekovi = brojLekovi;
+        this.brojParcina = brojParcina;
     }
 
-    public String getIme() {
-        return ime;
+    public String getName() {
+        return name;
     }
 
-    public void setIme(String ime) {
-        this.ime = ime;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public int getNegativna() {
-        return negativna;
+    public int getDaliePozitiven() {
+        return daliePozitiven;
     }
 
-    public void setNegativna(int negativna) {
-        this.negativna = negativna;
+    public void setDaliePozitiven(int daliePozitiven) {
+        this.daliePozitiven = daliePozitiven;
     }
 
     public int getCena() {
@@ -234,78 +236,65 @@ class Lek {
         this.cena = cena;
     }
 
-    public int getBrojLekovi() {
-        return brojLekovi;
+    public int getBrojParcina() {
+        return brojParcina;
     }
 
-    public void setBrojLekovi(int brojLekovi) {
-        this.brojLekovi = brojLekovi;
+    public void setBrojParcina(int brojParcina) {
+        this.brojParcina = brojParcina;
     }
 }
-
 
 public class Apteka {
 
-    public static String makeUpperCase(String in){
-
-        String maker = "";
-        for(int i = 0;i<in.length();i++){
-            maker+=Character.toUpperCase(in.charAt(i));
-        }
-        return maker;
-    }
-
     public static void main(String[] args) throws IOException {
+        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+        int n = Integer.parseInt(in.readLine());
 
-    BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-    int n = Integer.parseInt(in.readLine());
-
-    OBHT<String, Lek> hashtable = new OBHT<>(n*n);
-    // filling the hash table up . . .
-    for(int i = 0; i<n;i++){
-
-        String line = in.readLine();
-        String [] pom = line.split(" ");
-        Lek lek = new Lek(pom[0], Integer.parseInt(pom[1]), Integer.parseInt(pom[2]),
-                Integer.parseInt(pom[3]));
-        hashtable.insert(pom[0], lek);
-    }
-
-    while(true){
-
-        String porackaIme = in.readLine();
-        if(porackaIme.equals("KRAJ")){
-            break;
+        OBHT<String, Lek> hashtable = new OBHT<>(n*n);
+        // filling the hash table up . . .
+        for(int i=0; i<n;i++){
+            String line = in.readLine();
+            String [] parts = line.split(" ");
+            Lek lek = new Lek(parts[0], Integer.parseInt(parts[1]), Integer.parseInt(parts[2]), Integer.parseInt(parts[3]));
+                            // parts[0] would be the name of the pharmaceutical
+            hashtable.insert(parts[0],lek);
         }
 
-        int brojLekovi = Integer.parseInt(in.readLine());
-        porackaIme = makeUpperCase(porackaIme);
-        int key = hashtable.search(porackaIme);
-        if(key == -1){
-            System.out.println("Nema takov lek!");
-            continue;
-        }
-        else {
-            Lek lek = (Lek) hashtable.getBucket(key).value;
-            System.out.println(lek.ime);
-            if(lek.negativna == 0){
-                System.out.println("NEG");
+        while(true){
+            String imeLek = in.readLine();
+            imeLek = imeLek.toUpperCase();
+            int brojLekovi = Integer.parseInt(in.readLine());
+            if(imeLek.equals("KRAJ")){
+                break;
             }
+
+            int key = hashtable.search(imeLek);
+            if(key == -1){
+                System.out.println("Nema takov lek");
+            }
+
             else{
-                System.out.println("POZ");
-            }
-            System.out.println(lek.cena);
-            System.out.println(lek.brojLekovi);
-            if(brojLekovi <= lek.brojLekovi){
-                System.out.println("Napravena naracka");
-                lek.brojLekovi = lek.brojLekovi - brojLekovi;
-                hashtable.insert(lek.ime, lek);
-            }
-            else {
-                System.out.println("Nema dovolno lekovi");
+                Lek lek = (Lek) hashtable.getValue(key);
+                System.out.println(lek.getName());
+                if(lek.getDaliePozitiven()==0){
+                    System.out.println("NEG");
+                }
+                else{
+                    System.out.println("POZ");
+                }
+                System.out.println(lek.getCena());
+                System.out.println(lek.getBrojParcina());
+                if(brojLekovi<= lek.getBrojParcina()){
+                    System.out.println("Napravena poracka");
+                    lek.brojParcina = lek.brojParcina - brojLekovi;
+                }
+                else{
+                    System.out.println("Nema dovolno lekovi");
+                }
             }
         }
-    }
 
     }
 }
+
