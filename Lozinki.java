@@ -24,32 +24,31 @@ import java.util.Arrays;
 
 
 public class Lozinki {
-    public static void main (String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int N = Integer.parseInt(br.readLine());
+    public static void main(String[] args) throws IOException {
+        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+        int N = Integer.parseInt(in.readLine());
 
+        CBHT<String, String> translatetable = new CBHT<String,String>(N*N);
 
-        CBHT<String,String> table = new CBHT<>(2*N);
-        for(int i=1;i<=N;i++){
-            String imelozinka = br.readLine();
-            String[] pom = imelozinka.split(" ");
-            table.insert(pom[0], pom[1]);
+        for(int i=0;i<N;i++){
+
+            String line = in.readLine();
+            String [] parts = line.split(" ");
+            translatetable.insert(parts[0], parts[1]);
         }
 
-        while (true) {
-            String line = br.readLine();
-            if (line.equals("KRAJ"))
-                break;
-            String parts [] = line.split(" ");
-          // System.out.println("PARTS HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! " + Arrays.toString(parts));
-            SLLNode<MapEntry<String,String>> temp = table.search(parts[0]);
-            if (temp == null || !(temp.getElement().value.equals(parts[1])))
-                System.out.println("Nenajaven");
-            else {
+        while(true){
+
+            String line = in.readLine();
+            String [] parts = line.split(" ");
+            SLLNode<MapEntry<String,String>> tmp = translatetable.search(parts[0]);
+            if(tmp.getElement().value.equals(parts[1])){
                 System.out.println("Najaven");
                 break;
             }
-
+            else{
+                System.out.println("Nenajaven");
+            }
         }
 
     }
