@@ -142,44 +142,49 @@ class OBHT<K extends Comparable<K>,E> {
     }
 }
 
-public class CheckSpelling {
-
+public class Speluvanje {
     public static void main(String[] args) throws IOException {
+        OBHT<String, String> tabela;
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int N = Integer.parseInt(br.readLine());
+        //---Vie odluchete za goleminata na hesh tabelata----
+        tabela = new OBHT<String,String>(300);
 
-        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-        int n = Integer.parseInt(in.readLine());
-        OBHT<String, String> table = new OBHT<>(n*n);
+        /*
+         *
+         * Vashiot kod tuka....
+         *
+         */
 
-        for(int i=0;i<n;i++){
-            String zboroj = in.readLine();
-            table.insert(zboroj, zboroj);
+        String temp;
+        for(int i=0; i<N; i++){
+            temp = br.readLine();
+            String zb = temp;
+            tabela.insert(zb, temp);
         }
-        boolean flag = true;
+
         String word;
-        String textToCheck = in.readLine();
-        String [] parts = textToCheck.split(" ");
-        for(int i=0;i<parts.length;i++){
-
-            word = parts[i];
-            char znak = word.charAt(word.length()-1);
-            if(!Character.isAlphabetic(znak)){
+        String text = br.readLine();
+        String [] split = text.split(" ");
+        boolean flag = true;
+        for(int i=0; i<split.length; i++){
+            char znak = split[i].charAt(split[i].length()-1);
+            word = split[i];
+            if(!Character.isAlphabetic(znak))
                 word = word.substring(0, word.length()-1);
-            }
-
             word = word.toLowerCase();
-            if(word.length()==0){
+
+            if (word.length() == 0)
                 continue;
-            }
-            String searchSpell = word;
-            if(table.search(searchSpell)==-1){
+
+            String searchWord = word;
+            if(tabela.search(searchWord) == -1) {
                 System.out.println(word);
                 flag = false;
             }
         }
-        if(flag){
+        if(flag)
             System.out.println("Bravo");
-        }
-
     }
 }
 
