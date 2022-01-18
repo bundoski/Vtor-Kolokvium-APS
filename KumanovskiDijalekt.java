@@ -14,6 +14,8 @@
 
 package KumanovskiDijalekt;
 
+
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -128,50 +130,47 @@ class CBHT<K extends Comparable<K>, E> {
     }
 
 }
-
 public class KumanovskiDijalekt {
-    public static void main (String[] args) throws IOException {
+    public static void main(String[] args) throws IOException {
 
-        BufferedReader br = new BufferedReader(new InputStreamReader(
-                System.in));
-        int N = Integer.parseInt(br.readLine());
+        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+        int n = Integer.parseInt(in.readLine());
+        CBHT<String,String> table = new CBHT<>(77);
 
-        CBHT<String, String> map = new CBHT<String, String>(77);
+        for(int i=0;i<n;i++){
 
-        String rechnik;
-
-        for(int i=0;i<N;i++){
-            rechnik=br.readLine();
-            String [] parts = rechnik.split(" ");
-            map.insert(parts[0], parts[1]);
+            String line = in.readLine();
+            String [] parts = line.split(" ");
+            table.insert(parts[0], parts[1]);
         }
 
-        String tekst=br.readLine();
-
-        //Vasiot kod tuka
+        String tekst = in.readLine();
+        String novTekst = "";
+        String newWord = "";
         String [] parts = tekst.split(" ");
-        String novTekst= "";
 
         for(int i=0;i<parts.length;i++){
-            String searchWord = parts[i];
-            char znak = parts[i].charAt(parts[i].length() -1 );
+
+            //SLLNode<MapEntry<String,String>> tmp = table.search(parts[i]);
+            String word = parts[i];
+            newWord = word;
+            
+            char znak = word.charAt(word.length()-1);
             if(!Character.isAlphabetic(znak))
-                 searchWord = parts[i].substring(0,parts[i].length() -1 );
-            searchWord = searchWord.toLowerCase();
-            String newWord = parts[i];
+                word = parts[i].substring(0,parts[i].length()-1);
+            word = word.toLowerCase();
 
-            if(map.search(searchWord)!=null){
-
-                newWord = map.search(searchWord).element.value;
-                if(!Character.isAlphabetic(znak))
+            if(table.search(word)!=null){
+                newWord = table.search(word).element.value;
+                
+                if(!Character.isAlphabetic(znak)){
                     newWord+=znak;
+                }
                 if(Character.isUpperCase(parts[i].charAt(0)))
                     newWord = Character.toUpperCase(newWord.charAt(0)) + newWord.substring(1);
-
             }
             novTekst += newWord + " ";
         }
-
         System.out.println(novTekst);
 
     }
