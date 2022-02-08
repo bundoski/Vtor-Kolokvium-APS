@@ -226,15 +226,14 @@ public class Preveduvac {
 
         String line = in.readLine();
         while(!line.equals("KRAJ")){
+            line = in.readLine();
             int key = translateTable.search(line);
             if(key == -1){
                 System.out.println("/");
-                line = in.readLine();
                 continue;
             }
             String val = translateTable.getValue(key);
             System.out.println(val);
-            line = in.readLine();
         }
 
     }
